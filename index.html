@@ -1,50 +1,24 @@
-l<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Papiroy's Burgers | Menú Oficial y Pedidos</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter & Oswald -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet" />
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Oswald', 'sans-serif'],
-          },
+          fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
           colors: {
-            blush: {
-              50: '#FFF5F7',
-              100: '#FDF2F8',
-              200: '#FCE7F3',
-              300: '#FBCFE8',
-            },
-            berry: {
-              400: '#F472B6',
-              500: '#EC4899',
-              600: '#DB2777',
-            },
-            crimson: {
-              500: '#F43F5E',
-              600: '#E11D48',
-              700: '#DC2626',
-              800: '#9F1239',
-            },
-            obsidian: {
-              950: '#09090B',
-              900: '#141216',
-              850: '#1A161D',
-              800: '#241D28',
-            }
+            blush: { 50: '#FFF5F7', 100: '#FDF2F8', 200: '#FCE7F3', 300: '#FBCFE8' },
+            berry: { 400: '#F472B6', 500: '#EC4899', 600: '#DB2777' },
+            crimson: { 500: '#F43F5E', 600: '#E11D48', 700: '#DC2626', 800: '#9F1239' },
+            obsidian: { 950: '#09090B', 900: '#141216', 850: '#1A161D', 800: '#241D28' }
           }
         }
       }
@@ -52,15 +26,10 @@ l<!DOCTYPE html>
   </script>
 </head>
 <body class="bg-obsidian-950 text-zinc-100 font-sans min-h-screen flex flex-col selection:bg-crimson-600 selection:text-white">
-
-  <!-- Barra de Notificación (Toast personalizado) -->
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-  <!-- Navegación Principal con acentos Rojo a Rosado -->
   <header class="sticky top-0 z-40 bg-obsidian-950/90 backdrop-blur-md border-b border-rose-500/20 shadow-lg shadow-black/40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-wrap items-center justify-between py-3 gap-3">
-        <!-- Logo -->
         <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('inicio')">
           <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-crimson-700 via-crimson-500 to-berry-400 flex items-center justify-center text-white shadow-md shadow-rose-500/25">
             <i class="fa-solid fa-burger text-xl"></i>
@@ -72,14 +41,11 @@ l<!DOCTYPE html>
             <p class="text-xs text-rose-200/70">Hamburguesas, Snacks y Combos</p>
           </div>
         </div>
-
-        <!-- Estado de Cliente Activo + Botón Detalle Pedido rápido -->
         <div class="flex items-center gap-3">
           <div id="header-client-badge" onclick="switchTab('inicio')" class="cursor-pointer hidden sm:flex items-center gap-2 bg-obsidian-900 hover:bg-obsidian-850 border border-rose-500/25 px-3 py-1.5 rounded-xl text-xs transition">
             <span class="w-2 h-2 rounded-full bg-berry-400 animate-pulse"></span>
             <span class="text-zinc-300">Cliente: <strong id="header-client-name" class="text-berry-400">Invitado</strong></span>
           </div>
-
           <button type="button" onclick="switchTab('detalle')" class="relative flex items-center gap-2 bg-gradient-to-r from-crimson-700 via-crimson-600 to-berry-500 hover:from-crimson-600 hover:to-berry-400 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-md shadow-rose-600/25 transition active:scale-95">
             <i class="fa-solid fa-receipt"></i>
             <span class="hidden md:inline">Detalle Pedido</span>
@@ -87,41 +53,28 @@ l<!DOCTYPE html>
           </button>
         </div>
       </div>
-
-      <!-- Pestañas de Navegación basadas en las 6 Entidades del Diagrama -->
       <nav class="flex items-center gap-1.5 overflow-x-auto pb-3 pt-1" aria-label="Entidades del Sistema">
         <button type="button" data-tab="inicio" onclick="switchTab('inicio')" class="nav-tab active-tab flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-gradient-to-r from-crimson-700 to-berry-500 text-white shadow-sm">
-          <i class="fa-solid fa-user-check"></i>
-          <span>1. Inicio (Cliente)</span>
+          <i class="fa-solid fa-user-check"></i><span>1. Inicio (Cliente)</span>
         </button>
         <button type="button" data-tab="productos" onclick="switchTab('productos')" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition bg-obsidian-900 text-zinc-300 hover:bg-obsidian-850 hover:text-white border border-rose-500/15">
-          <i class="fa-solid fa-utensils"></i>
-          <span>2 & 3. Categorías y Productos</span>
+          <i class="fa-solid fa-utensils"></i><span>2 & 3. Categorías y Productos</span>
         </button>
         <button type="button" data-tab="detalle" onclick="switchTab('detalle')" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition bg-obsidian-900 text-zinc-300 hover:bg-obsidian-850 hover:text-white border border-rose-500/15">
-          <i class="fa-solid fa-cart-plus"></i>
-          <span>4. Detalle del Pedido</span>
+          <i class="fa-solid fa-cart-plus"></i><span>4. Detalle del Pedido</span>
         </button>
         <button type="button" data-tab="pedidos" onclick="switchTab('pedidos')" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition bg-obsidian-900 text-zinc-300 hover:bg-obsidian-850 hover:text-white border border-rose-500/15">
-          <i class="fa-solid fa-clipboard-list"></i>
-          <span>5. Pedidos</span>
+          <i class="fa-solid fa-clipboard-list"></i><span>5. Pedidos</span>
         </button>
         <button type="button" data-tab="pago" onclick="switchTab('pago')" class="nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition bg-obsidian-900 text-zinc-300 hover:bg-obsidian-850 hover:text-white border border-rose-500/15">
-          <i class="fa-solid fa-credit-card"></i>
-          <span>6. Método de Pago</span>
+          <i class="fa-solid fa-credit-card"></i><span>6. Método de Pago</span>
         </button>
       </nav>
     </div>
   </header>
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
-  <!-- Contenedor Principal -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-
-    <!-- =================================================================== -->
-    <!-- SECCIÓN 1: INICIO (Entidad: Inicio -> Nombre, Email, Teléfono)      -->
-    <!-- =================================================================== -->
     <section id="section-inicio" class="tab-section space-y-6">
-      <!-- Hero Banner con Degradado Rojo Intenso a Rosado sobre Fondo Oscuro -->
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-crimson-800/90 via-crimson-700/80 to-berry-600/80 border border-rose-400/25 p-6 sm:p-10 shadow-2xl shadow-rose-950/50 text-white">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div class="lg:col-span-7 space-y-4">
@@ -146,7 +99,6 @@ l<!DOCTYPE html>
             </div>
           </div>
 
-          <!-- Formulario Entidad: INICIO (Nombre, Email, Teléfono) -->
           <div class="lg:col-span-5 bg-obsidian-900 text-zinc-100 border border-rose-500/25 rounded-2xl p-6 shadow-2xl">
             <div class="flex items-center justify-between mb-4">
               <div>
@@ -200,7 +152,6 @@ l<!DOCTYPE html>
               </button>
             </form>
 
-            <!-- Resumen de Sesión Activa -->
             <div id="active-session-card" class="mt-4 pt-4 border-t border-rose-500/15 flex items-center justify-between text-xs">
               <div class="text-zinc-400">
                 Sesión activa: <span id="session-summary-text" class="text-white font-semibold">Sin registrar</span>
@@ -211,7 +162,6 @@ l<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- Mapa Visual Rápido del Flujo Entidad-Relación -->
       <div class="bg-obsidian-900 border border-rose-500/20 rounded-3xl p-6 shadow-lg">
         <h3 class="text-sm font-semibold uppercase tracking-wider text-rose-200 mb-4 flex items-center gap-2">
           <i class="fa-solid fa-diagram-project text-berry-400"></i>
@@ -246,11 +196,6 @@ l<!DOCTYPE html>
       </div>
     </section>
 
-    <!-- =================================================================== -->
-    <!-- SECCIÓN 2 & 3: CATEGORÍAS Y PERFIL DE PRODUCTOS                     -->
-    <!-- Entidad Categorías: Nombre de la Categoría                          -->
-    <!-- Entidad Producto: Nombre, Precio, Descripción, Categoría            -->
-    <!-- =================================================================== -->
     <section id="section-productos" class="tab-section hidden space-y-6">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-obsidian-900 border border-rose-500/20 p-6 rounded-3xl shadow-lg">
         <div>
@@ -271,12 +216,8 @@ l<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- Barra de Filtros de Categorías (Nombre de la Categoría) + Buscador -->
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-        <div id="category-filters" class="flex items-center gap-2 overflow-x-auto pb-1">
-          <!-- Renderizado dinámicamente por JS -->
-        </div>
-
+        <div id="category-filters" class="flex items-center gap-2 overflow-x-auto pb-1"></div>
         <div class="relative min-w-[240px]">
           <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-rose-400/80">
             <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -286,17 +227,9 @@ l<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- Grid de Productos -->
-      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Renderizado dinámicamente por JS -->
-      </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- SECCIÓN 4: DETALLE DEL PEDIDO                                       -->
-    <!-- Atributos: Cantidad de Productos, Subtotal (+ Exclusiones)          -->
-    <!-- =================================================================== -->
-    <section id="section-detalle" class="tab-section hidden space-y-6">
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+          <section id="section-detalle" class="tab-section hidden space-y-6">
       <div class="bg-obsidian-900 border border-rose-500/20 p-6 rounded-3xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg">
         <div>
           <span class="text-xs font-semibold uppercase tracking-wider text-berry-400">Entidad: Detalle Pedido</span>
@@ -304,6 +237,547 @@ l<!DOCTYPE html>
           <p class="text-xs sm:text-sm text-zinc-400">Ajusta la <strong>Cantidad de Productos</strong>, revisa tus <strong>complementos quitados</strong> y verifica el <strong>Subtotal</strong>.</p>
         </div>
         <button type="button" onclick="switchTab('productos')" class="bg-obsidian-850 hover:bg-obsidian-800 text-blush-100 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-rose-500/25 transition self-start sm:self-auto">
-          <i class="fa-solid fa-plus mr-1 text-berry-4
-          
-                      
+          <i class="fa-solid fa-plus mr-1 text-berry-400"></i> Seguir agregando
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8 bg-obsidian-900 border border-rose-500/20 rounded-3xl p-6 shadow-lg space-y-4">
+          <div class="flex items-center justify-between border-b border-rose-500/15 pb-3">
+            <h3 class="font-bold text-white text-base">Productos en la orden</h3>
+            <button type="button" onclick="clearCart()" class="text-xs text-rose-400 hover:text-rose-300 font-semibold transition">
+              <i class="fa-solid fa-trash mr-1"></i> Vaciar lista
+            </button>
+          </div>
+          <div id="cart-items-list" class="space-y-3"></div>
+        </div>
+
+        <div class="lg:col-span-4 bg-obsidian-900 border border-rose-500/20 rounded-3xl p-6 shadow-lg h-fit space-y-4">
+          <h3 class="font-bold text-white text-base border-b border-rose-500/15 pb-3">Resumen</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between text-zinc-400">
+              <span>Total de artículos:</span>
+              <span id="detail-total-qty" class="text-white font-semibold">0</span>
+            </div>
+            <div class="flex justify-between text-zinc-400">
+              <span>Subtotal:</span>
+              <span id="detail-subtotal" class="text-berry-400 font-bold text-base">$0.00</span>
+            </div>
+          </div>
+
+          <button type="button" onclick="createOrderFromCart()" class="w-full bg-gradient-to-r from-crimson-700 via-crimson-600 to-berry-500 hover:from-crimson-600 hover:to-berry-400 text-white font-bold py-3 rounded-xl text-sm shadow-md shadow-rose-600/25 transition active:scale-95">
+            Generar Pedido
+          </button>
+          <button type="button" onclick="switchTab('pago')" class="w-full bg-obsidian-850 hover:bg-obsidian-800 border border-rose-500/25 text-zinc-200 font-semibold py-2.5 rounded-xl text-xs transition">
+            Ir a Método de Pago
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-pedidos" class="tab-section hidden space-y-6">
+      <div class="bg-obsidian-900 border border-rose-500/20 p-6 rounded-3xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-berry-400">Entidad: Pedidos</span>
+          <h2 class="font-display text-2xl sm:text-3xl uppercase text-white mt-1">Historial de Pedidos</h2>
+          <p class="text-xs sm:text-sm text-zinc-400">Revisa la fecha, estado, productos, exclusiones y total de cada orden.</p>
+        </div>
+        <button type="button" onclick="switchTab('productos')" class="bg-obsidian-850 hover:bg-obsidian-800 text-blush-100 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-rose-500/25 transition self-start sm:self-auto">
+          <i class="fa-solid fa-burger mr-1 text-berry-400"></i> Nuevo Pedido
+        </button>
+      </div>
+      <div id="orders-list" class="space-y-4"></div>
+    </section>
+
+    <section id="section-pago" class="tab-section hidden space-y-6">
+      <div class="bg-obsidian-900 border border-rose-500/20 p-6 rounded-3xl shadow-lg">
+        <span class="text-xs font-semibold uppercase tracking-wider text-berry-400">Entidad: Método de Pago</span>
+        <h2 class="font-display text-2xl sm:text-3xl uppercase text-white mt-1">Confirmar Método de Pago</h2>
+        <p class="text-xs sm:text-sm text-zinc-400 mt-1">Elige cómo pagarás tu pedido actual o último pedido pendiente.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <form id="payment-form" class="lg:col-span-7 bg-obsidian-900 border border-rose-500/20 rounded-3xl p-6 shadow-lg space-y-4">
+          <div>
+            <label for="payment-type" class="block text-xs font-semibold text-zinc-200 mb-1">Tipo de pago</label>
+            <select id="payment-type" onchange="togglePaymentFields()" class="w-full px-4 py-2.5 bg-obsidian-950 border border-rose-500/25 rounded-xl text-sm text-white outline-none focus:border-berry-400">
+              <option value="Efectivo">Efectivo en entrega / mostrador</option>
+              <option value="Transferencia">Transferencia SPEI</option>
+              <option value="Tarjeta">Tarjeta débito / crédito</option>
+            </select>
+          </div>
+
+          <div id="payment-extra-fields">
+            <label for="payment-ref" class="block text-xs font-semibold text-zinc-200 mb-1">Referencia o comentario (opcional)</label>
+            <input type="text" id="payment-ref" placeholder="Ej. Pago con billete de $200 o últimos 4 dígitos"
+              class="w-full px-4 py-2.5 bg-obsidian-950 border border-rose-500/25 rounded-xl text-sm text-white placeholder-zinc-500 outline-none focus:border-berry-400" />
+          </div>
+
+          <button type="submit" class="w-full bg-gradient-to-r from-crimson-700 via-crimson-600 to-berry-500 hover:from-crimson-600 hover:to-berry-400 text-white font-bold py-3 rounded-xl text-sm shadow-md shadow-rose-600/25 transition active:scale-95">
+            Confirmar Pago
+          </button>
+        </form>
+
+        <div class="lg:col-span-5 bg-obsidian-900 border border-rose-500/20 rounded-3xl p-6 shadow-lg h-fit space-y-3">
+          <h3 class="font-bold text-white text-base border-b border-rose-500/15 pb-3">Estado del Pago</h3>
+          <p class="text-xs text-zinc-400">Cliente: <strong id="pay-client-name" class="text-white">Invitado</strong></p>
+          <p class="text-xs text-zinc-400">Monto a pagar: <strong id="pay-amount" class="text-berry-400 text-base">$0.00</strong></p>
+          <p class="text-xs text-zinc-400">Estado: <span id="pay-status-badge" class="px-2.5 py-0.5 rounded-lg bg-obsidian-850 text-zinc-200 font-semibold">Pendiente</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="customize-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+    <div class="bg-obsidian-900 border border-rose-500/30 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs text-berry-400 font-semibold uppercase">Personalizar producto</span>
+          <h3 id="modal-product-name" class="font-display text-2xl text-white uppercase">Producto</h3>
+        </div>
+        <button type="button" onclick="closeCustomizeModal()" class="text-zinc-400 hover:text-white text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <p id="modal-product-desc" class="text-xs text-zinc-400"></p>
+      <div>
+        <p class="text-xs font-semibold text-zinc-200 mb-2">Marcar complementos que deseas QUITAR:</p>
+        <div id="modal-exclusions-list" class="grid grid-cols-2 gap-2 text-xs"></div>
+      </div>
+      <div class="flex items-center justify-between pt-2">
+        <span class="text-xs text-zinc-400">Cantidad:</span>
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="changeModalQty(-1)" class="w-8 h-8 rounded-lg bg-obsidian-850 border border-rose-500/25 text-white font-bold">-</button>
+          <span id="modal-qty" class="font-bold text-white">1</span>
+          <button type="button" onclick="changeModalQty(1)" class="w-8 h-8 rounded-lg bg-obsidian-850 border border-rose-500/25 text-white font-bold">+</button>
+        </div>
+      </div>
+      <button type="button" onclick="confirmAddCustomizedProduct()" class="w-full bg-gradient-to-r from-crimson-700 via-crimson-600 to-berry-500 text-white font-bold py-3 rounded-xl text-sm shadow-md transition">
+        Agregar al Pedido · <span id="modal-total-price">$0.00</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="entity-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+    <div class="bg-obsidian-900 border border-rose-500/30 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 id="entity-modal-title" class="font-display text-xl text-white uppercase">Nuevo Registro</h3>
+        <button type="button" onclick="closeEntityModal()" class="text-zinc-400 hover:text-white text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="entity-modal-body" class="space-y-3"></div>
+    </div>
+  </div>
+
+  <footer class="border-t border-rose-500/15 py-5 text-center text-xs text-zinc-500">
+    Papiroy's Burgers · Menú Oficial y Pedidos
+  </footer>
+    <script>
+    const COMMON_TOPPINGS = ['Cebolla', 'Chile jalapeño', 'Catsup', 'Mostaza', 'Jitomate', 'Lechuga', 'Pepinillos', 'Mayonesa'];
+
+    const state = {
+      activeTab: 'inicio',
+      selectedCategory: 'Todas',
+      client: { name: '', email: '', phone: '' },
+      categories: ['Hamburguesas', 'Snacks', 'Combos'],
+      products: [
+        { id: 1, name: 'Papiroy Clásica', price: 75, category: 'Hamburguesas', desc: 'Carne de res a la plancha, queso americano, lechuga, jitomate, cebolla y aderezo de la casa.' },
+        { id: 2, name: 'Doble Bacon Roy', price: 105, category: 'Hamburguesas', desc: 'Doble carne, tocino crujiente, doble queso cheddar, cebolla caramelizada y salsa especial.' },
+        { id: 3, name: 'Papas Gajo con Queso', price: 55, category: 'Snacks', desc: 'Papas sazonadas con especias, bañadas en queso fundido y toque de jalapeño.' },
+        { id: 4, name: 'Aros de Cebolla', price: 50, category: 'Snacks', desc: 'Crujientes aros empanizados acompañados de aderezo chipotle.' },
+        { id: 5, name: 'Combo Papiroy', price: 115, category: 'Combos', desc: 'Hamburguesa Clásica + papas a la francesa + bebida refrescante.' },
+        { id: 6, name: 'Combo Pareja Burger', price: 210, category: 'Combos', desc: '2 hamburguesas a elegir + papas grandes + 2 bebidas.' }
+      ],
+      cart: [],
+      orders: [],
+      payment: { type: 'Efectivo', ref: '', status: 'Pendiente' },
+      modalProduct: null,
+      modalQty: 1
+    };
+
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'bg-obsidian-850 border border-berry-400/40 text-white text-xs font-medium px-4 py-3 rounded-2xl shadow-xl';
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 2800);
+    }
+
+    function formatMoney(amount) {
+      return '$' + Number(amount || 0).toFixed(2);
+    }
+
+    function switchTab(tabName) {
+      state.activeTab = tabName;
+
+      document.querySelectorAll('.tab-section').forEach(sec => {
+        sec.classList.add('hidden');
+      });
+      const target = document.getElementById('section-' + tabName);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        const isActive = btn.getAttribute('data-tab') === tabName;
+        btn.classList.toggle('active-tab', isActive);
+        if (isActive) {
+          btn.className = 'nav-tab active-tab flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-gradient-to-r from-crimson-700 to-berry-500 text-white shadow-sm';
+        } else {
+          btn.className = 'nav-tab flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition bg-obsidian-900 text-zinc-300 hover:bg-obsidian-850 hover:text-white border border-rose-500/15';
+        }
+      });
+
+      if (tabName === 'productos') {
+        renderCategoryFilters();
+        renderProducts();
+      } else if (tabName === 'detalle') {
+        renderCart();
+      } else if (tabName === 'pedidos') {
+        renderOrders();
+      } else if (tabName === 'pago') {
+        renderPaymentSummary();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('client-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      state.client = {
+        name: document.getElementById('client-name').value.trim(),
+        email: document.getElementById('client-email').value.trim(),
+        phone: document.getElementById('client-phone').value.trim()
+      };
+      updateClientUI();
+      showToast('Datos guardados. ¡Vamos al menú!');
+      switchTab('productos');
+    });
+
+    function updateClientUI() {
+      const displayName = state.client.name || 'Invitado';
+      document.getElementById('header-client-name').textContent = displayName;
+      document.getElementById('session-summary-text').textContent = state.client.name
+        ? `${state.client.name} (${state.client.phone})`
+        : 'Sin registrar';
+      document.getElementById('pay-client-name').textContent = displayName;
+    }
+
+    function renderCategoryFilters() {
+      const wrap = document.getElementById('category-filters');
+      const allCats = ['Todas', ...state.categories];
+      wrap.innerHTML = allCats.map(cat => {
+        const active = state.selectedCategory === cat;
+        return `<button type="button" onclick="selectCategory('${cat.replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+          active
+            ? 'bg-gradient-to-r from-crimson-700 to-berry-500 text-white'
+            : 'bg-obsidian-900 text-zinc-300 border border-rose-500/20 hover:bg-obsidian-850'
+        }">${cat}</button>`;
+      }).join('');
+    }
+
+    function selectCategory(cat) {
+      state.selectedCategory = cat;
+      renderCategoryFilters();
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const query = (document.getElementById('product-search')?.value || '').toLowerCase().trim();
+
+      const filtered = state.products.filter(p => {
+        const matchCat = state.selectedCategory === 'Todas' || p.category === state.selectedCategory;
+        const matchText = !query || p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query);
+        return matchCat && matchText;
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="col-span-full bg-obsidian-900 border border-rose-500/20 rounded-2xl p-8 text-center text-sm text-zinc-400">No hay productos que coincidan con tu búsqueda.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="bg-obsidian-900 border border-rose-500/20 hover:border-berry-400/50 rounded-3xl p-5 flex flex-col justify-between shadow-lg transition">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] font-semibold uppercase px-2.5 py-0.5 rounded-lg bg-obsidian-850 text-berry-400 border border-rose-500/20">${p.category}</span>
+              <span class="font-bold text-lg text-white">${formatMoney(p.price)}</span>
+            </div>
+            <h3 class="font-display text-xl text-white uppercase tracking-wide">${p.name}</h3>
+            <p class="text-xs text-zinc-400 leading-relaxed">${p.desc}</p>
+          </div>
+
+          <button type="button" onclick="openCustomizeModal(${p.id})" class="mt-5 w-full bg-gradient-to-r from-crimson-700 via-crimson-600 to-berry-500 hover:from-crimson-600 hover:to-berry-400 text-white font-semibold py-2.5 rounded-xl text-xs sm:text-sm transition active:scale-95">
+            <i class="fa-solid fa-sliders mr-1.5"></i> Personalizar y Agregar
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function openCustomizeModal(productId) {
+      const prod = state.products.find(item => item.id === productId);
+      if (!prod) return;
+      state.modalProduct = prod;
+      state.modalQty = 1;
+
+      document.getElementById('modal-product-name').textContent = prod.name;
+      document.getElementById('modal-product-desc').textContent = prod.desc;
+      document.getElementById('modal-qty').textContent = '1';
+      document.getElementById('modal-total-price').textContent = formatMoney(prod.price);
+
+      document.getElementById('modal-exclusions-list').innerHTML = COMMON_TOPPINGS.map(t => `
+        <label class="flex items-center gap-2 bg-obsidian-950 border border-rose-500/20 rounded-xl px-3 py-2 cursor-pointer text-zinc-200">
+          <input type="checkbox" value="${t}" class="exclusion-checkbox accent-pink-500 rounded" />
+          <span>Sin ${t.toLowerCase()}</span>
+        </label>
+      `).join('');
+
+      const modal = document.getElementById('customize-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCustomizeModal() {
+      const modal = document.getElementById('customize-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      state.modalProduct = null;
+    }
+
+    function changeModalQty(delta) {
+      if (!state.modalProduct) return;
+      state.modalQty = Math.max(1, state.modalQty + delta);
+      document.getElementById('modal-qty').textContent = String(state.modalQty);
+      document.getElementById('modal-total-price').textContent = formatMoney(state.modalProduct.price * state.modalQty);
+    }
+
+    function confirmAddCustomizedProduct() {
+      if (!state.modalProduct) return;
+      const exclusions = Array.from(document.querySelectorAll('.exclusion-checkbox:checked')).map(cb => 'Sin ' + cb.value.toLowerCase());
+
+      state.cart.push({
+        uid: Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+        productId: state.modalProduct.id,
+        name: state.modalProduct.name,
+        price: state.modalProduct.price,
+        qty: state.modalQty,
+        exclusions
+      });
+
+      updateCartBadge();
+      closeCustomizeModal();
+      showToast(`${state.modalProduct.name} agregado al pedido`);
+    }
+
+    function updateCartBadge() {
+      const totalQty = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-badge-count').textContent = String(totalQty);
+    }
+
+    function renderCart() {
+      const list = document.getElementById('cart-items-list');
+      const totalQty = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+      document.getElementById('detail-total-qty').textContent = String(totalQty);
+      document.getElementById('detail-subtotal').textContent = formatMoney(subtotal);
+      document.getElementById('pay-amount').textContent = formatMoney(subtotal);
+
+      if (!state.cart.length) {
+        list.innerHTML = `<div class="text-center py-8 text-sm text-zinc-400">Tu detalle de pedido está vacío. Agrega productos desde el menú.</div>`;
+        return;
+      }
+
+      list.innerHTML = state.cart.map((item, idx) => `
+        <div class="bg-obsidian-850 border border-rose-500/20 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h4 class="font-bold text-white text-sm">${item.name} <span class="text-berry-400">· ${formatMoney(item.price * item.qty)}</span></h4>
+            <p class="text-xs text-zinc-400 mt-0.5">${item.exclusions.length ? 'Ajustes: ' + item.exclusions.join(', ') : 'Sin exclusiones'}</p>
+          </div>
+          <div class="flex items-center gap-2 self-end sm:self-center">
+            <button type="button" onclick="updateCartItemQty(${idx}, -1)" class="w-7 h-7 rounded-lg bg-obsidian-950 border border-rose-500/25 text-white text-xs font-bold">-</button>
+            <span class="text-xs font-bold text-white px-1">${item.qty}</span>
+            <button type="button" onclick="updateCartItemQty(${idx}, 1)" class="w-7 h-7 rounded-lg bg-obsidian-950 border border-rose-500/25 text-white text-xs font-bold">+</button>
+            <button type="button" onclick="removeCartItem(${idx})" class="ml-1 text-rose-400 hover:text-rose-300 text-xs px-2"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateCartItemQty(index, delta) {
+      const item = state.cart[index];
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        state.cart.splice(index, 1);
+      }
+      updateCartBadge();
+      renderCart();
+    }
+
+    function removeCartItem(index) {
+      state.cart.splice(index, 1);
+      updateCartBadge();
+      renderCart();
+    }
+
+    function clearCart() {
+      state.cart = [];
+      updateCartBadge();
+      renderCart();
+      showToast('Lista vaciada');
+    }
+
+    function createOrderFromCart() {
+      if (!state.cart.length) {
+        showToast('Agrega al menos un producto primero');
+        return;
+      }
+      const total = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const summaryItems = state.cart.map(i => `${i.qty}x ${i.name}${i.exclusions.length ? ' (' + i.exclusions.join(', ') + ')' : ''}`).join(' | ');
+
+      state.orders.unshift({
+        id: 'ORD-' + String(state.orders.length + 1).padStart(3, '0'),
+        date: new Date().toLocaleString('es-MX'),
+        client: state.client.name || 'Invitado',
+        itemsText: summaryItems,
+        total,
+        status: 'Pendiente de pago'
+      });
+
+      state.cart = [];
+      updateCartBadge();
+      renderCart();
+      showToast('Pedido generado. Ahora confirma tu pago.');
+      switchTab('pago');
+    }
+
+    function renderOrders() {
+      const container = document.getElementById('orders-list');
+      if (!state.orders.length) {
+        container.innerHTML = `<div class="bg-obsidian-900 border border-rose-500/20 rounded-3xl p-8 text-center text-sm text-zinc-400">Aún no has generado pedidos.</div>`;
+        return;
+      }
+
+      container.innerHTML = state.orders.map(ord => `
+        <div class="bg-obsidian-900 border border-rose-500/20 rounded-3xl p-5 shadow-lg space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="font-bold text-white text-sm">${ord.id} · ${ord.client}</span>
+            <span class="text-xs px-2.5 py-1 rounded-lg bg-obsidian-850 text-berry-400 font-semibold">${ord.status}</span>
+          </div>
+          <p class="text-xs text-zinc-300">${ord.itemsText}</p>
+          <div class="flex items-center justify-between text-xs text-zinc-400 pt-2 border-t border-rose-500/15">
+            <span>${ord.date}</span>
+            <strong class="text-white text-sm">${formatMoney(ord.total)}</strong>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function togglePaymentFields() {
+      const type = document.getElementById('payment-type').value;
+      const input = document.getElementById('payment-ref');
+      input.placeholder = type === 'Transferencia'
+        ? 'Ej. Clave o referencia de transferencia'
+        : type === 'Tarjeta'
+          ? 'Ej. Últimos 4 dígitos de tarjeta'
+          : 'Ej. Pago en efectivo';
+    }
+
+    function renderPaymentSummary() {
+      const latestOrder = state.orders[0];
+      const currentCartTotal = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const amount = latestOrder && latestOrder.status === 'Pendiente de pago' ? latestOrder.total : currentCartTotal;
+
+      document.getElementById('pay-client-name').textContent = state.client.name || 'Invitado';
+      document.getElementById('pay-amount').textContent = formatMoney(amount);
+      document.getElementById('pay-status-badge').textContent = state.payment.status;
+    }
+
+    document.getElementById('payment-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      state.payment.type = document.getElementById('payment-type').value;
+      state.payment.ref = document.getElementById('payment-ref').value.trim();
+      state.payment.status = `Pagado (${state.payment.type})`;
+
+      if (state.orders[0] && state.orders[0].status === 'Pendiente de pago') {
+        state.orders[0].status = `Pagado · ${state.payment.type}`;
+      }
+
+      renderPaymentSummary();
+      showToast('Método de pago confirmado');
+      switchTab('pedidos');
+    });
+
+    function openCategoryModal() {
+      document.getElementById('entity-modal-title').textContent = 'Nueva Categoría';
+      document.getElementById('entity-modal-body').innerHTML = `
+        <input type="text" id="new-cat-name" placeholder="Ej. Bebidas o Postres" class="w-full px-4 py-2.5 bg-obsidian-950 border border-rose-500/25 rounded-xl text-sm text-white outline-none" />
+        <button type="button" onclick="saveNewCategory()" class="w-full bg-gradient-to-r from-crimson-700 to-berry-500 text-white font-bold py-2.5 rounded-xl text-sm">Guardar Categoría</button>
+      `;
+      const m = document.getElementById('entity-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function saveNewCategory() {
+      const name = (document.getElementById('new-cat-name')?.value || '').trim();
+      if (!name) return;
+      if (!state.categories.includes(name)) {
+        state.categories.push(name);
+      }
+      closeEntityModal();
+      renderCategoryFilters();
+      showToast('Categoría agregada');
+    }
+
+    function openProductModal() {
+      const optionsHtml = state.categories.map(c => `<option value="${c}">${c}</option>`).join('');
+      document.getElementById('entity-modal-title').textContent = 'Nuevo Producto';
+      document.getElementById('entity-modal-body').innerHTML = `
+        <input type="text" id="new-prod-name" placeholder="Nombre del producto" class="w-full px-4 py-2.5 bg-obsidian-950 border border-rose-500/25 rounded-xl text-sm text-white outline-none" />
+        <input type="number" id="new-prod-price" placeholder="Precio (ej. 85)" class="w-full px-4 py-2.5 bg-obsidian-950 border border-rose-500/25 rounded-xl text-sm text-white outline-none" />
+        <select id="new-prod-cat" class="w-full px-4 py-2.5 bg-obsidian-950 border border-rose-500/25 rounded-xl text-sm text-white outline-none">${optionsHtml}</select>
+        <textarea id="new-prod-desc" rows="2" placeholder="Descripción breve" class="w-full px-4 py-2.5 bg-obsidian-950 border border-rose-500/25 rounded-xl text-sm text-white outline-none"></textarea>
+        <button type="button" onclick="saveNewProduct()" class="w-full bg-gradient-to-r from-crimson-700 to-berry-500 text-white font-bold py-2.5 rounded-xl text-sm">Guardar Producto</button>
+      `;
+      const m = document.getElementById('entity-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function saveNewProduct() {
+      const name = (document.getElementById('new-prod-name')?.value || '').trim();
+      const price = parseFloat(document.getElementById('new-prod-price')?.value || '0');
+      const category = document.getElementById('new-prod-cat')?.value || state.categories[0];
+      const desc = (document.getElementById('new-prod-desc')?.value || '').trim() || 'Preparado al momento en Papiroy\'s Burgers.';
+      if (!name || price <= 0) return;
+
+      state.products.push({
+        id: Date.now(),
+        name,
+        price,
+        category,
+        desc
+      });
+
+      closeEntityModal();
+      renderProducts();
+      showToast('Producto agregado al menú');
+    }
+
+    function closeEntityModal() {
+      const m = document.getElementById('entity-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    updateClientUI();
+    updateCartBadge();
+    renderCategoryFilters();
+    renderProducts();
+  </script>
+</body>
+</html>
+
+                    
